@@ -49,10 +49,72 @@ def save_ppm(image, output_file):
 # ---------- Drawing/model routines ----------
 
 def draw_line(image, x0, y0, z0, x1, y1, z1, color):
-    #
-    # TODO: Complete a funcao!
-    #
+    dx = abs(x1 - x0)
+    dy = abs(y1 - y0)
+    dz = abs(z1 - z0)
 
+    if (x1 > x0):
+        x_inc = 1
+    else:
+        x_inc = -1
+
+    if (y1 > y0):
+        y_inc = 1
+    else:
+        y_inc = -1
+
+    if (z1 > z0):
+        z_inc = 1
+    else:
+        z_inc = -1
+
+    # X-axis direction
+    if (dx >= dy and dx >= dz):
+        p1 = 2*dy - dx
+        p2 = 2*dz = dx
+        while (x1 != x2):
+            x1 = x1 + x_inc
+            if (p1 >= 0):
+                y1 = y1 + y_inc
+                p1 = p1 - 2*dx
+            if (p2 >= 0):
+                z1 = z1 + z_inc
+                p2 = p2 - 2*dx
+            p1 = p1 + 2*dy
+            p2 = p2 + 2*dz
+            image[x1][y1][z1] = color
+
+    # Y-axis direction
+    elif (dy >= dx and dy >= dz):
+        p1 = 2*dx - dy
+        p2 = 2*dz = dy
+        while (y1 != y2):
+            y1 = y1 + y_inc
+            if (p1 >= 0):
+                x1 = x1 + x_inc
+                p1 = p1 - 2*dy
+            if (p2 >= 0):
+                z1 = z1 + z_inc
+                p2 = p2 - 2*dy
+            p1 = p1 + 2*dx
+            p2 = p2 + 2*dz
+            image[x1][y1][z1] = color
+
+    # Y-axis direction
+    else:
+        p1 = 2*dy - dz
+        p2 = 2*dx = dz
+        while (z1 != z2):
+            z1 = z1 + z_inc
+            if (p1 >= 0):
+                y1 = y1 + y_inc
+                p1 = p1 - 2*dz
+            if (p2 >= 0):
+                x1 = x1 + x_inc
+                p2 = p2 - 2*dx
+            p1 = p1 + 2*dy
+            p2 = p2 + 2*dx
+            image[x1][y1][z1] = color
 # ---------- Main routine ----------
 
 # Parses and checks command-line arguments
