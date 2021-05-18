@@ -128,7 +128,11 @@ def draw_circle(r):
     points.append((-x, y))
     points.append((x, -y))
     points.append((-x, -y))
-    while (y >= 0):
+    points.append((y, x))
+    points.append((-y, x))
+    points.append((y, -x))
+    points.append((-y, -x))
+    while (y >= x):
         if(Delta >= 0):
             Delta += dSE
             y -= 1
@@ -141,6 +145,10 @@ def draw_circle(r):
         points.append((-x, y))
         points.append((x, -y))
         points.append((-x, -y))
+        points.append((y, x))
+        points.append((-y, x))
+        points.append((y, -x))
+        points.append((-y, -x))
     return points
 
 # ---------- Main routine ----------
