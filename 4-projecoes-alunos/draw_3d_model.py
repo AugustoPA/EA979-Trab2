@@ -211,6 +211,10 @@ for line_n,line in enumerate(input_lines[2:], start=3):
                   file=sys.stderr)
             sys.exit(1)
 
+    if(color_set):
+        color = current_color
+    else:
+        color = DEFAULT_COLOR
 
     if command == 'c':
         # Clears with new background color
@@ -219,10 +223,54 @@ for line_n,line in enumerate(input_lines[2:], start=3):
         image[...] = background_color
         zbuffer[...] = ZBUFFER_BACKGROUND
 
-    # elif command == ... :
-    #
-    # TODO: Implemente os demais comandos
-    #
+    elif command == 'C':
+        check_parameters(CHANNELS_N)
+
+        current_color = np.array(parameters, dtype=IMAGE_DTYPE)
+        if(!color_set):
+            color_set = True
+
+    elif command == 'L':
+        # Draws given line
+        check_parameters(6)
+        parameters = list(map(int, parameters))
+
+        # Falta aplicar las matrices cabrón
+        draw_line(image, parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], color)
+
+    elif command == 'P':
+
+        parameters = list(map(int, parameters))
+        num_param, parameters = (parameters[0] * 3), parameters[1:]
+        check_parameters(num_param)
+
+        for ind in range(0, num_param - 3, 3):
+            draw_line(image, parameters[ind], parameters[ind + 1], parameters[ind + 2], parameters[ind + 3], parameters[ind + 4], parameters[ind + 5], color)
+
+    elif command == 'R':
+
+        parameters = list(map(int, parameters))
+        num_param, parameters = (parameters[0] * 3), parameters[1:]
+        check_parameters(num_param)
+
+        for ind in range(0, num_param - 3, 3):
+            draw_line(image, parameters[ind], parameters[ind + 1], parameters[ind + 2], parameters[ind + 3], parameters[ind + 4], parameters[ind + 5], color)
+        draw_line(image, parameters[0], parameters[1], parameters[2], parameters[-3], parameters[-2], parameters[-1], color)
+
+    elif command == 'm':
+        check_parameters(16)
+
+        matrixT = matrixT.dot(np.array(parameters, dtype=MODEL_DTYPE).reshape(4, 4))
+
+    elif command == 'M':
+        check_parameters(16)
+
+        matrixT = np.array(parameters, dtype=MODEL_DTYPE).reshape(4, 4)
+
+    elif command == 'V':
+        check_parameters(16)
+
+        matrixP = np.array(parameters, dtype=MODEL_DTYPE).reshape(4, 4)
 
     else:
         print(f'line {line_n}: unrecognized command "{command}"!', file=sys.stderr)
