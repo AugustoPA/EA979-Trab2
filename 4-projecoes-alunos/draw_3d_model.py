@@ -115,6 +115,34 @@ def draw_line(image, x0, y0, z0, x1, y1, z1, color):
             p1 = p1 + 2*dy
             p2 = p2 + 2*dx
             image[x1][y1][z1] = color
+           
+def draw_circle(r):
+    points = []
+    x = 0
+    y = round(r)
+    Delta = (5/4) - r
+    Delta = round(Delta)
+    dE = 2*x + 3
+    dSE = 2*x - (2*y) + 5
+    points.append((x, y))
+    points.append((-x, y))
+    points.append((x, -y))
+    points.append((-x, -y))
+    while (y >= 0):
+        if(Delta >= 0):
+            Delta += dSE
+            y -= 1
+        else:
+            Delta += dE
+        dSE = 2*x - (2*y) + 5
+        dE = 2*x + 3
+        x += 1
+        points.append((x, y))
+        points.append((-x, y))
+        points.append((x, -y))
+        points.append((-x, -y))
+    return points
+
 # ---------- Main routine ----------
 
 # Parses and checks command-line arguments
