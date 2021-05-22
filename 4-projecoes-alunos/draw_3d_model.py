@@ -357,51 +357,26 @@ for line_n,line in enumerate(input_lines[2:], start=3):
     elif command == "SPH":
         # Desenha uma esfera com N meridianos e M paralelos, com dimensões referentes ao raio dado de entrada
         check_parameters(3)
-        sphereC = []
-        sphereU = []
-        sphereD = []
+        sphere = []
         matrixS = matrixP.dot(matrixT)
         teta = (np.pi/int(parameters[2]))
+        sphere.append((0, 0, int(parameters[0])))
+        sphere.append((0, 0, -int(parameters[0])))
 
         if(int(parameters[2])%2 == 1):
             parameters[2] -= 1
-            xP, yP, zP = apply_matrix(matrixS, round(int(parameters[0]) * np.cos(0*teta)), round(int(parameters[0]) * np.sin(0*teta)), 0)
-            xS = 0
-            yS = 0
             for k in range(int(parameters[1])*2):
-                xA = xS
-                yA = yS
-                xS, yS, zS = apply_matrix(matrixS, round(int(parameters[0]) * np.cos(k*teta)), round(int(parameters[0]) * np.sin(k*teta)), 0)
-                sphereC.append((xS, yS))
-                if((k != 0) and (k != int(parameters[1])*2 - 1)):
-                    draw_line(vector, xA, yA, 0, xS, yS, 0, color)
-                elif((k != 0) and (k == int(parameters[1])*2 - 1)):
-                    draw_line(vector, xS, yS, 0, xP, yP, 0, color)
+                # sphere.append(x, y, z) <- caso haja paralelo na origem
+                sphere.append((round(int(parameters[0]) * np.cos(k*teta)) , round(int(parameters[0]) * np.sin(k*teta)), 0))
 
         z_mov = int(parameters[0])//(int(parameters[2]) + 1)
-        for t in range(1, int(parameters[2]) + 1):
-            rN = np.sqrt((int(parameters[0])**2) + (z_mov*t)**2)
-            xPp, yPp, zPp = apply_matrix(matrixS, round(rN * np.cos(0*teta)), round(rN * np.sin(0*teta)), (t * z_mov))
-            xPn, yPn, zPn = apply_matrix(matrixS, round(rN * np.cos(0*teta)), round(rN * np.sin(0*teta)), -(t * z_mov))
-            xSp = 0
-            ySp = 0
-            xSn = 0
-            ySn = 0
+        for t in range(1, int(parameters[2]) + 1):  # <- caso tenha mais pralelos do que deve ter.... remova o "+ 1" do for
+            r_novo = np.sqrt((int(parameters[0])**2) - (z_mov*t)**2)
             for k in range(int(parameters[1])*2):
-                xAp = xSp
-                yAp = ySp
-                xAn = xSn
-                yAn = ySn
-                xSp, ySp, zSp = apply_matrix(matrixS, round(rN * np.cos(k*teta)), round(rN * np.sin(k*teta)), (t * z_mov))
-                sphereU.append((xSp, ySp))
-                xSn, ySn, zSn = apply_matrix(matrixS, round(rN * np.cos(k*teta)), round(rN * np.sin(k*teta)), -(t * z_mov))
-                sphereD.append((xSn, ySn))
-                if((k != 0) and (k != int(parameters[1])*2 - 1)):
-                    draw_line(vector, xAp, yAp, 0, xSp, ySp, 0, color)
-                    draw_line(vector, xAn, yAn, 0, xSn, ySn, 0, color)
-                elif((k != 0) and (k == int(parameters[1])*2 - 1)):
-                    draw_line(vector, xSp, ySp, 0, xPp, yPp, 0, color)
-                    draw_line(vector, xSn, ySn, 0, xPn, yPn, 0, color)
+                # sphere.append(x, y, z)
+                sphere.append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), (t * z_mov)))
+                # sphere.append(x, y, -z)
+                sphere.append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), -(t * z_mov)))
 
         #return
 #---------------------------------------------------------------------------------------------------------#
