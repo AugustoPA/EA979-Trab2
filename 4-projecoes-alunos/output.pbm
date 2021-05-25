@@ -1,0 +1,3 @@
+usage: python draw_2d_model.py <input.dat> <output.ppm>
+       interprets the drawing instructions in the input file and renders
+       the output in the NETPBM PPM format into output.ppm

@@ -360,24 +360,39 @@ for line_n,line in enumerate(input_lines[2:], start=3):
         sphere = []
         matrixS = matrixP.dot(matrixT)
         teta = (np.pi/int(parameters[2]))
-        sphere.append((0, 0, int(parameters[0])))
-        sphere.append((0, 0, -int(parameters[0])))
+        sphere.append([(0, 0, int(parameters[0]))])
+
+        z_mov = int(parameters[0])//(int(parameters[2]) + 1)
+        for t in range(1, (int(parameters[2]) + 1)):  # <- caso tenha mais pralelos do que deve ter.... remova o "+ 1" do for
+            r_novo = np.sqrt((int(parameters[0])**2) - (z_mov*t)**2)
+            print("banana")
+            sphere.append([])
+            for k in range(int(parameters[1])*2):
+                # sphere.append(x, y, z)
+                sphere[t].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), (((int(parameters[2]) + 1) - t) * z_mov)))
+                # sphere.append(x, y, -z)
+                # sphere[t].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), -(t * z_mov)))
 
         if(int(parameters[2])%2 == 1):
             parameters[2] -= 1
             for k in range(int(parameters[1])*2):
                 # sphere.append(x, y, z) <- caso haja paralelo na origem
-                sphere.append((round(int(parameters[0]) * np.cos(k*teta)) , round(int(parameters[0]) * np.sin(k*teta)), 0))
+                sphere.append([(round(int(parameters[0]) * np.cos(k*teta)) , round(int(parameters[0]) * np.sin(k*teta)), 0)])
 
-        z_mov = int(parameters[0])//(int(parameters[2]) + 1)
-        for t in range(1, int(parameters[2]) + 1):  # <- caso tenha mais pralelos do que deve ter.... remova o "+ 1" do for
+        for t in range(1, (int(parameters[2]) + 1)):  # <- caso tenha mais pralelos do que deve ter.... remova o "+ 1" do for
             r_novo = np.sqrt((int(parameters[0])**2) - (z_mov*t)**2)
+            sphere.append([])
             for k in range(int(parameters[1])*2):
                 # sphere.append(x, y, z)
-                sphere.append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), (t * z_mov)))
+                # sphere[t].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), (t * z_mov)))
                 # sphere.append(x, y, -z)
-                sphere.append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), -(t * z_mov)))
-
+                sphere[t+int(parameters[2])].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), -(t * z_mov)))
+        sphere.append([(0, 0, -int(parameters[0]))])
+        for a in range(len(sphere[1])-1):
+			for b in range(a, len(sphere)):
+				x_init, y_init, z_init = apply_matrix(matrixS, sphere[0][0], points[0][1], points[0][])
+				x_fin, y_fin, z_fin = apply_matrix(matrixS, points[u][0], points[u][1], points[u][2])
+				draw_line(vector, x_init, y_init, 0, x_fin, y_fin, 0, color)
         #return
 #---------------------------------------------------------------------------------------------------------#
     else:
