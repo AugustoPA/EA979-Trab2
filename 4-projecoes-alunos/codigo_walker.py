@@ -88,6 +88,7 @@ def apply_matrix(matrix, x, y, z):
     return round(x), round(y), round(z)
 
 def gigantic_brain(p1, p2, teta, stepZ):
+    print(p1[2], p2[2], stepZ)
     if(p1[2] == p2[2]):
         r = np.sqrt((p2[0]**2) + (p2[1]**2))
         dist = np.sqrt((2*(r**2)) - 2*(r**2)*np.cos(teta))
@@ -98,8 +99,10 @@ def gigantic_brain(p1, p2, teta, stepZ):
     elif((p1[2] == p2[2] + stepZ) or (p1[2] == p2[2] - stepZ)):
             r1 = np.sqrt((p1[0]**2) + (p1[1]**2))
             r2 = np.sqrt((p2[0]**2) + (p2[1]**2))
-            R = abs(r1 - r2)
+            R = abs(r1) - abs(r2)
             dist = np.sqrt((R**2) + (stepZ**2))
+            if(p1[2] == -p2[2]):
+                print(p1[0], p1[1], p1[2], "e", p2[0], p2[1], p2[2], "R:", R)
             if(np.sqrt(((p2[0] - p1[0])**2) + ((p2[1] - p1[1])**2) + (stepZ**2)) - dist <= 0.5):
                 return True
             else:
@@ -385,11 +388,11 @@ for line_n,line in enumerate(input_lines[2:], start=3):
         sphere.append((0, 0, int(parameters[0])))
         sphere.append((0, 0, -int(parameters[0])))
 
-        #odd = False
-        #div = 2
+        odd = False
+        div = 2
         if(int(parameters[2])%2 == 1):
-            #odd = True
-            #div = 1
+            odd = True
+            div = 1
             parameters[2] = int(parameters[2]) - 1
             for k in range(int(parameters[1])*2):
                 # sphere.append(x, y, z) <- caso haja paralelo na origem
@@ -418,7 +421,6 @@ for line_n,line in enumerate(input_lines[2:], start=3):
                     x_init, y_init, z_init = apply_matrix(matrixS, sphere[j][0], sphere[j][2], sphere[j][1])
                     x_fin, y_fin, z_fin = apply_matrix(matrixS, sphere[u][0], sphere[u][2], sphere[u][1])
                     draw_line(vector, x_init, y_init, 0, x_fin, y_fin, 0, color)
-
         #return
 #---------------------------------------------------------------------------------------------------------#
     else:
