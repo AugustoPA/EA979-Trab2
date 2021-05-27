@@ -8,18 +8,18 @@ class StackMatrix():
 
 	def push(self, matrix: np.array):
 		'''
-		Push a matrix element to the stack
+		Manda uma matriz para a pilha de matrizes
 		'''
 
 		self.stack.append(matrix)
 
 	def pop(self) -> np.array:
 		'''
-		Pop the last element from the stack
-		Returns:
-			The last element from the stack
+		Retira o ultimo elemento da pilha
+		Retorna:
+			O ultimo elemento da pilha
 		Raises:
-			IndexError: when the stack is empty
+			IndexError: Quando a pilha esta vazia
 		'''
 
 		try:
