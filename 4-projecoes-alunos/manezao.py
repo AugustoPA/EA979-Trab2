@@ -338,7 +338,6 @@ for line_n,line in enumerate(input_lines[2:], start=3):
 			sphere.append([])
 			for k in range(int(parameters[1])*2):
 				if(((int(parameters[2])//2 + 1) - t) == 1 and odd == False):
-					# sphere.append(x, y, z)
 					sphere[t].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), (z_mov//2)))
 				else:
 					sphere[t].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), (((int(parameters[2])//2 - t)) * z_mov) + (z_mov//div)))
@@ -346,7 +345,6 @@ for line_n,line in enumerate(input_lines[2:], start=3):
 		if(odd):
 			sphere.append([])
 			for k in range(int(parameters[1])*2):
-				# sphere.append(x, y, z) <- caso haja paralelo na origem
 				sphere[(int(parameters[2])//2 + 1)].append((round(int(parameters[0]) * np.cos(k*teta)) , round(int(parameters[0]) * np.sin(k*teta)), 0))
 
 		for t in range(1, (int(parameters[2])//2)+1):  # <- caso tenha mais pralelos do que deve ter.... remova o "+ 1" do for
@@ -362,7 +360,6 @@ for line_n,line in enumerate(input_lines[2:], start=3):
 				else:
 					sphere[t+int(parameters[2])//2+(div%2)].append((round(r_novo * np.cos(k*teta)), round(r_novo * np.sin(k*teta)), -((t-1) * z_mov) - (z_mov//div)))
 		sphere.append([(0, 0, -int(parameters[0]))])
-		# for a in range(len(sphere[1])-1):
 		for b in range(len(sphere[1])):
 			x_init, y_init, z_init = apply_matrix(matrixT, sphere[0][0][0], sphere[0][0][2], sphere[0][0][1])
 			x_fin, y_fin, z_fin = apply_matrix(matrixT, sphere[1][b][0], sphere[1][b][2], sphere[1][b][1])
