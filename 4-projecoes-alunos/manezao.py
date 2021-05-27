@@ -105,9 +105,9 @@ def draw_line(vector, x0, y0, z0, x1, y1, z1, color):
 	dy = abs(y1 - y0)
 	dz = abs(z1 - z0)
 
-        x_inc = 1 if x1 > x0 else -1
-        y_inc = 1 if y1 > y0 else -1
-        z_inc = 1 if z1 > z0 else -1
+	x_inc = 1 if x1 > x0 else -1
+	y_inc = 1 if y1 > y0 else -1
+	z_inc = 1 if z1 > z0 else -1
 
 	# X-axis direction
 	if (dx >= dy and dx >= dz):
