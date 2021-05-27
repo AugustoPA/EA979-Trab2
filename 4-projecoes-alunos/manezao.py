@@ -74,7 +74,7 @@ def save_ppm(image, output_file):
 
 # ---------- Drawing/model routines ----------
 
-#multiplica um ponto por uma matriz de transformacao
+# Realiza uma multiplicacao de matriz pelas coordenadas de um ponto
 def apply_matrix(matrix, x, y, z):
 	x1 = x*matrix[0][0] + y*matrix[0][1] + z*matrix[0][2] + matrix[0][3]
 	y1 = x*matrix[1][0] + y*matrix[1][1] + z*matrix[1][2] + matrix[1][3]
@@ -85,7 +85,7 @@ def apply_matrix(matrix, x, y, z):
 	z = z1/w
 	return round(x), round(y), round(z)
 
-#checa os pontos do cubo para fazer os traços
+# Checa os pontos do cubo para fazer os traços
 def check_cube(p1, p2, aux):
 	x = abs((p1[0] - p2[0])/(2*p1[0]))
 	y = abs((p1[1] - p2[1])/(2*p1[0]))
@@ -347,7 +347,6 @@ for line_n,line in enumerate(input_lines[2:], start=3):
 				sphere[(int(parameters[2])//2 + 1)].append((round(int(parameters[0]) * np.cos(k*teta)) , round(int(parameters[0]) * np.sin(k*teta)), 0))
 
 		for t in range(1, (int(parameters[2])//2)+1):  # <- caso tenha mais pralelos do que deve ter.... remova o "+ 1" do for
-			#r_novo = np.sqrt(abs((int(parameters[0])**2) - (z_mov*t)**2))
 			if(t == 1 and odd == False):
 				r_novo = np.sqrt((int(parameters[0])**2) - ((z_mov/2)**2))
 			else:
@@ -380,7 +379,6 @@ for line_n,line in enumerate(input_lines[2:], start=3):
 			x_init, y_init, z_init = apply_matrix(matrixT, sphere[a][-1][0], sphere[a][-1][2], sphere[a][-1][1])
 			x_fin, y_fin, z_fin = apply_matrix(matrixT, sphere[a][0][0], sphere[a][0][2], sphere[a][0][1])
 			draw_line(vector, x_init, y_init, z_init, x_fin, y_fin, z_fin, color)
-		#return
 #---------------------------------------------------------------------------------------------------------#
 	else:
 		print(f'line {line_n}: unrecognized command "{command}"!', file=sys.stderr)
