@@ -168,7 +168,6 @@ def draw_line(vector, x0, y0, z0, x1, y1, z1, color):
 				p2 = p2 - 2*dz
 			p1 = p1 + 2*dy
 			p2 = p2 + 2*dx
-			#image[x1][y1][z1] = color
 			vector.append(((x0, y0, z0), color))
 
 # ---------- Main routine ----------
