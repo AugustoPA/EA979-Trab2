@@ -74,8 +74,8 @@ def save_ppm(image, output_file):
 
 # ---------- Drawing/model routines ----------
 
+#multiplica um ponto por uma matriz de transformacao
 def apply_matrix(matrix, x, y, z):
-
 	x1 = x*matrix[0][0] + y*matrix[0][1] + z*matrix[0][2] + matrix[0][3]
 	y1 = x*matrix[1][0] + y*matrix[1][1] + z*matrix[1][2] + matrix[1][3]
 	z1 = x*matrix[2][0] + y*matrix[2][1] + z*matrix[2][2] + matrix[2][3]
@@ -85,14 +85,18 @@ def apply_matrix(matrix, x, y, z):
 	z = z1/w
 	return round(x), round(y), round(z)
 
-def big_brain(p1, p2, aux):
+#checa os pontos do cubo para fazer os traços
+def check_cube(p1, p2, aux):
 	x = abs((p1[0] - p2[0])/(2*p1[0]))
 	y = abs((p1[1] - p2[1])/(2*p1[0]))
 	z = abs((p1[2] - p2[2])/(2*p1[0]))
+	#caso a soma de 1, temos dois vertices que formam uma aresta
 	if((x + y + z) == 1):
 		return True
+	#se a soma der 3, sao diagonais do cubo
 	elif((x + y + z) == 3):
 		return False
+	#se a soma der 2, sao diagonais dos lados
 	elif((x + y + z) == 2):
 		return bool(int(aux))
 
@@ -310,7 +314,7 @@ for line_n,line in enumerate(input_lines[2:], start=3):
 		points = [(r, r, r), (-r, r, r), (r, -r, r), (-r, -r, r), (r, r, -r), (-r, r, -r), (r, -r, -r), (-r, -r, -r)]
 		for i in range(7):
 			for u in range(i+1, 8):
-				if(big_brain(points[i], points[u], parameters[1]) == True):
+				if(check_cube(points[i], points[u], parameters[1]) == True):
 					x_init, y_init, z_init = apply_matrix(matrixT, points[i][0], points[i][1], points[i][2])
 					x_fin, y_fin, z_fin = apply_matrix(matrixT, points[u][0], points[u][1], points[u][2])
 					draw_line(vector, x_init, y_init, z_init, x_fin, y_fin, z_fin, color)
